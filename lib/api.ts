@@ -6,8 +6,17 @@ export interface User {
 }
 
 export interface Account {
+  user_id: string
   cash_balance: number
-  blocked_balance: number
+  blocked_cash: number
+  full_name: string
+  email: string
+  phone: string
+  avatar_url: string
+  status: string
+  kyc_status: string
+  joined_at: string
+  company_name: string
 }
 
 export interface Symbol {
@@ -148,8 +157,13 @@ export async function login(username: string, password: string): Promise<{ succe
   return res || { success: false }
 }
 
-export async function getAccount(userId: string): Promise<Account | null> {
-  return callApi<Account>('get_account', { user_id: userId })
+export interface AccountResponse {
+  success: boolean
+  data: Account
+}
+
+export async function getAccount(userId: string): Promise<AccountResponse | null> {
+  return callApi<AccountResponse>('get_account', { user_id: userId })
 }
 
 export async function getMarket(): Promise<Symbol[] | null> {
