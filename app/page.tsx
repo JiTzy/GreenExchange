@@ -78,7 +78,7 @@ export default function AboutPage() {
           
           <div className="relative w-full max-w-4xl mx-auto rounded-2xl overflow-hidden border border-border shadow-lg">
             <Image
-              src="https://i.ibb.co/nM79WRd9/infographic.png"
+              src="https://i.ibb.co.com/3mp2Jk62/6140442c-d27a-44f4-967d-dc96fddb3b43.png"
               alt="RECs and Carbon Credits Infographic"
               width={1200}
               height={800}

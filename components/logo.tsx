@@ -2,7 +2,7 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 // GreenExchange Logo URL from ibb.co
-export const LOGO_URL = "https://i.ibb.co/4R9w33WS/GX-logo.png"
+export const LOGO_URL = "https://i.ibb.co.com/Zp4XvhGC/download.png"
 
 interface LogoProps {
   size?: "sm" | "md" | "lg"
