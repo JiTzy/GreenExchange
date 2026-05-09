@@ -15,20 +15,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useAuthStore } from "@/lib/auth-store"
-import { getAccount } from "@/lib/api"
+import { getAccount, getUserProfile } from "@/lib/api"
 import { InboxButton } from "./inbox"
 
 export function DashboardHeader() {
   const router = useRouter()
   const { userId, logout } = useAuthStore()
 
-  const { data: accountData } = useSWR(
+  const { data: account } = useSWR(
     userId ? ['account', userId] : null,
     () => getAccount(userId!),
     { refreshInterval: 5000 }
   )
 
-  const account = accountData?.data
+  const { data: profileData } = useSWR(
+    userId ? ['profile', userId] : null,
+    () => getUserProfile(userId!)
+  )
+  
+  const profile = profileData?.data
 
   const handleLogout = () => {
     logout()
@@ -57,10 +62,10 @@ export function DashboardHeader() {
               <p className="font-mono font-semibold text-foreground">{formatCurrency(account?.cash_balance)}</p>
             </div>
           </div>
-          {account?.blocked_cash !== undefined && account.blocked_cash > 0 && (
+          {account?.blocked_balance !== undefined && account.blocked_balance > 0 && (
             <div className="hidden md:block">
               <p className="text-muted-foreground text-xs">Blocked</p>
-              <p className="font-mono text-muted-foreground">{formatCurrency(account.blocked_cash)}</p>
+              <p className="font-mono text-muted-foreground">{formatCurrency(account.blocked_balance)}</p>
             </div>
           )}
         </div>
@@ -74,9 +79,9 @@ export function DashboardHeader() {
               className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
             >
               <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center overflow-hidden relative">
-                {account?.avatar_url ? (
+                {profile?.avatar_url ? (
                   <Image 
-                    src={account.avatar_url} 
+                    src={profile.avatar_url} 
                     alt="Avatar" 
                     fill
                     className="object-cover"
@@ -87,7 +92,7 @@ export function DashboardHeader() {
                 )}
               </div>
               <span className="hidden md:block text-sm font-medium text-foreground">
-                {account?.full_name || "User"}
+                {profile?.full_name || profile?.username || "User"}
               </span>
               <ChevronDown className="h-4 w-4 hidden md:block" />
             </Button>
@@ -95,8 +100,8 @@ export function DashboardHeader() {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium">{account?.full_name || "User"}</p>
-                <p className="text-xs text-muted-foreground">{account?.email || "No email"}</p>
+                <p className="text-sm font-medium">{profile?.full_name || "User"}</p>
+                <p className="text-xs text-muted-foreground">{profile?.email || `@${profile?.username}`}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />

@@ -365,8 +365,8 @@ export function InboxButton() {
               </div>
             </div>
 
-            {/* Message List - Max 5 visible with scroll */}
-            <ScrollArea className="flex-1 max-h-[320px]">
+            {/* Message List */}
+            <ScrollArea className="flex-1 max-h-[400px]">
               {messages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
                   <InboxIcon className="h-10 w-10 mb-3 opacity-50" />

@@ -10,11 +10,11 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FieldGroup, Field, FieldLabel, FieldDescription } from "@/components/ui/field"
 import { Badge } from "@/components/ui/badge"
-import { getAccount, updateAccount, type Account } from "@/lib/api"
+import { getUserProfile, updateAccount, type UserProfile } from "@/lib/api"
 import { useAuthStore } from "@/lib/auth-store"
 
-// Preload account data fetcher
-const accountFetcher = (key: [string, string]) => getAccount(key[1])
+// Preload profile data fetcher
+const profileFetcher = (key: [string, string]) => getUserProfile(key[1])
 
 export default function SettingsPage() {
   const router = useRouter()
@@ -23,20 +23,20 @@ export default function SettingsPage() {
   // Preload data on component mount
   useEffect(() => {
     if (userId) {
-      preload(['account', userId], accountFetcher)
+      preload(['profile', userId], profileFetcher)
     }
   }, [userId])
   
-  const { data: accountData, isLoading: isAccountLoading, mutate } = useSWR(
-    userId ? ['account', userId] : null,
-    accountFetcher,
+  const { data: profileData, isLoading: isProfileLoading, mutate } = useSWR(
+    userId ? ['profile', userId] : null,
+    profileFetcher,
     { 
       revalidateOnFocus: false,
       dedupingInterval: 5000
     }
   )
   
-  const account = accountData?.data
+  const profile = profileData?.data
   
   const [formData, setFormData] = useState({
     full_name: "",
@@ -58,17 +58,17 @@ export default function SettingsPage() {
   }, [isAuthenticated, router])
 
   useEffect(() => {
-    if (account && !isInitialized) {
+    if (profile && !isInitialized) {
       setFormData({
-        full_name: account.full_name || "",
-        email: account.email || "",
-        phone: account.phone || "",
-        company_name: account.company_name || "",
-        avatar_url: account.avatar_url || "",
+        full_name: profile.full_name || "",
+        email: profile.email || "",
+        phone: profile.phone || "",
+        company_name: profile.company_name || "",
+        avatar_url: profile.avatar_url || "",
       })
       setIsInitialized(true)
     }
-  }, [account, isInitialized])
+  }, [profile, isInitialized])
 
   const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -130,7 +130,7 @@ export default function SettingsPage() {
     }
   }
 
-  if (isAccountLoading) {
+  if (isProfileLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -178,18 +178,18 @@ export default function SettingsPage() {
               </div>
               
               <h3 className="mt-4 font-semibold text-foreground">
-                {account?.full_name || "User"}
+                {profile?.full_name || profile?.username || "User"}
               </h3>
-              <p className="text-sm text-muted-foreground">ID: {account?.user_id}</p>
+              <p className="text-sm text-muted-foreground">@{profile?.username}</p>
               
               <div className="mt-3">
-                {getKycBadge(account?.kyc_status)}
+                {getKycBadge(profile?.kyc_status)}
               </div>
               
               <div className="mt-4 w-full pt-4 border-t border-border">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Status</span>
-                  <span className="text-foreground capitalize">{account?.status || "Active"}</span>
+                  <span className="text-foreground capitalize">{profile?.status || "Active"}</span>
                 </div>
               </div>
             </div>
@@ -328,18 +328,18 @@ export default function SettingsPage() {
             <div>
               <p className="font-medium text-foreground">Verification Status</p>
               <p className="text-sm text-muted-foreground mt-1">
-                {account?.kyc_status === "VERIFIED" 
+                {profile?.kyc_status === "verified" 
                   ? "Your account is fully verified"
-                  : account?.kyc_status === "PENDING"
+                  : profile?.kyc_status === "pending"
                   ? "Your verification is being processed"
                   : "Complete KYC to increase trading limits"
                 }
               </p>
             </div>
-            {getKycBadge(account?.kyc_status)}
+            {getKycBadge(profile?.kyc_status)}
           </div>
           
-          {account?.kyc_status !== "VERIFIED" && (
+          {profile?.kyc_status !== "verified" && (
             <Button 
               variant="outline" 
               className="mt-4 border-primary text-primary hover:bg-primary/10"
