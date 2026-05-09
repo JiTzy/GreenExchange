@@ -3,7 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Leaf, Loader2, User, Mail, Phone, Building2, Lock, Eye, EyeOff } from "lucide-react"
+import { Loader2, User, Mail, Phone, Building2, Lock, Eye, EyeOff } from "lucide-react"
+import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -95,7 +96,7 @@ export default function RegisterPage() {
     
     if (res.success && res.user_id) {
       loginStore(res.user_id)
-      router.push("/dashboard")
+      router.push("/dashboard/fyp")
     } else {
       setError(res.error || "Failed to create account. Please try again.")
     }
@@ -131,10 +132,8 @@ export default function RegisterPage() {
     <div className="min-h-screen flex items-center justify-center p-4 py-8">
       <Card className="w-full max-w-lg bg-card border-border">
         <CardHeader className="text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="p-2 rounded-lg bg-primary/10">
-              <Leaf className="h-8 w-8 text-primary" />
-            </div>
+          <div className="flex items-center justify-center mb-4">
+            <Logo size="lg" showText={false} />
           </div>
           <CardTitle className="text-2xl font-bold text-foreground">Create Account</CardTitle>
           <CardDescription className="text-muted-foreground">

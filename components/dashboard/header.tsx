@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { Leaf, LogOut, Wallet, User, Settings, ChevronDown } from "lucide-react"
+import { LogOut, Wallet, User, Settings, ChevronDown } from "lucide-react"
+import { Logo } from "@/components/logo"
 import useSWR from "swr"
 import { Button } from "@/components/ui/button"
 import {
@@ -46,12 +47,8 @@ export function DashboardHeader() {
 
   return (
     <header className="h-16 border-b border-border bg-card px-4 lg:px-6 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <div className="p-1.5 rounded-lg bg-primary/10">
-          <Leaf className="h-6 w-6 text-primary" />
-        </div>
-        <span className="font-bold text-lg hidden sm:block text-foreground">GreenExchange</span>
-      </div>
+      <Logo size="md" showText className="hidden sm:flex" />
+      <Logo size="md" showText={false} className="sm:hidden" />
 
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-6 text-sm">
