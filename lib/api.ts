@@ -365,3 +365,85 @@ export async function getUserProfile(userId: string): Promise<ProfileResponse> {
   const res = await callApi<ProfileResponse>('get_user_profile', { user_id: userId })
   return res || { success: false, error: 'Network error' }
 }
+
+// FYP/Homepage Types
+export interface TrendingSymbol {
+  symbol: string
+  name: string
+  class: string
+  last_price: number
+  logo_url: string
+  certification: string
+  issuer: string
+}
+
+export interface NewsItem {
+  news_id: string
+  news_url: string
+  news_title: string
+  news_abstract: string
+  news_thumbnail_url: string
+}
+
+export interface ForumMessage {
+  user_id: string
+  chat_topic: string
+  chat_body: string
+  time: string
+}
+
+export interface FYPResponse {
+  success: boolean
+  trending_symbols: TrendingSymbol[]
+  news: NewsItem[]
+  forum: ForumMessage[]
+}
+
+export interface ForumResponse {
+  success: boolean
+  data: ForumMessage[]
+}
+
+export interface CertificateInfo {
+  certificate_id: string
+  certificate_name: string
+  certificate_publisher: string
+  certificate_loc: string
+  certificate_logo_url: string
+  certificate_type: string
+  certificate_year: string
+  certificate_desc_about: string
+}
+
+export interface CertificateInfoResponse {
+  success: boolean
+  data: CertificateInfo
+}
+
+// FYP/Homepage API Functions
+export async function getFYP(): Promise<FYPResponse | null> {
+  return callApi<FYPResponse>('get_fyp')
+}
+
+export async function getForum(): Promise<ForumResponse | null> {
+  return callApi<ForumResponse>('get_forum')
+}
+
+export async function postForum(
+  userId: string,
+  chatTopic: string,
+  chatBody: string
+): Promise<{ success: boolean }> {
+  const res = await callApi<{ success: boolean }>('post_forum', {
+    user_id: userId,
+    chat_topic: chatTopic,
+    chat_body: chatBody,
+  })
+  return res || { success: false }
+}
+
+export async function getCertificateInfo(certificateName: string): Promise<CertificateInfoResponse | null> {
+  return callApi<CertificateInfoResponse>('get_certificate_info', {
+    certificate_name: certificateName,
+  })
+}

@@ -4,7 +4,8 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
-import { Leaf, Loader2, ArrowLeft } from "lucide-react"
+import { Loader2, ArrowLeft } from "lucide-react"
+import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -70,10 +71,8 @@ export default function LoginPage() {
       
       <Card className="w-full max-w-md bg-card/95 border-border backdrop-blur-sm relative z-10 shadow-2xl">
         <CardHeader className="text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="p-2 rounded-lg bg-primary/10">
-              <Leaf className="h-8 w-8 text-primary" />
-            </div>
+          <div className="flex items-center justify-center mb-4">
+            <Logo size="lg" showText={false} />
           </div>
           <CardTitle className="text-2xl font-bold text-foreground">GreenExchange</CardTitle>
           <CardDescription className="text-muted-foreground">

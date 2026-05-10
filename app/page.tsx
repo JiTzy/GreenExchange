@@ -3,6 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Leaf, Zap, Globe, TrendingUp, Shield, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react"
+import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -14,12 +15,7 @@ export default function AboutPage() {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-primary/10">
-              <Leaf className="h-6 w-6 text-primary" />
-            </div>
-            <span className="font-bold text-lg text-foreground">GreenExchange</span>
-          </div>
+          <Logo size="md" />
           <Link href="/login">
             <Button variant="default" size="sm">
               Sign In
@@ -66,6 +62,29 @@ export default function AboutPage() {
               unoptimized
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
+          </div>
+        </div>
+      </section>
+
+      {/* About RECs and Carbon Credits Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">About RECs and Carbon Credits</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Understanding the environmental assets that power sustainable futures
+            </p>
+          </div>
+          
+          <div className="relative w-full max-w-4xl mx-auto rounded-2xl overflow-hidden border border-border shadow-lg">
+            <Image
+              src="https://i.ibb.co.com/3mp2Jk62/6140442c-d27a-44f4-967d-dc96fddb3b43.png"
+              alt="RECs and Carbon Credits Infographic"
+              width={1200}
+              height={800}
+              className="w-full h-auto"
+              unoptimized
+            />
           </div>
         </div>
       </section>
@@ -296,11 +315,8 @@ export default function AboutPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <Leaf className="h-5 w-5 text-primary" />
-                </div>
-                <span className="font-bold text-foreground">GreenExchange</span>
+              <div className="mb-4">
+                <Logo size="sm" />
               </div>
               <p className="text-sm text-muted-foreground">
                 Platform perdagangan aset lingkungan modern
